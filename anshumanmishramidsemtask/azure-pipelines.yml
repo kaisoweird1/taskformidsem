@@ -36,21 +36,21 @@ stages:
       inputs:
         script: |
           terraform init -upgrade
-        workingDirectory: 'environments/dev'
+        workingDirectory: 'anshumanmishramidsemtask/environments/dev'
 
     - task: CmdLine@2
       displayName: 'Terraform Validate'
       inputs:
         script: |
           terraform validate
-        workingDirectory: 'environments/dev'
+        workingDirectory: 'anshumanmishramidsemtask/environments/dev'
 
     - task: CmdLine@2
       displayName: 'Terraform Plan'
       inputs:
         script: |
           terraform plan -var="vm_admin_password=$(adminPassword)" -out=tfplan
-        workingDirectory: 'environments/dev'
+        workingDirectory: 'anshumanmishramidsemtask/environments/dev'
 
 - stage: DeploymentApproval
   displayName: 'Manual Review'
@@ -94,7 +94,7 @@ stages:
       inputs:
         script: |
           terraform apply -auto-approve tfplan
-        workingDirectory: 'environments/dev'
+        workingDirectory: 'anshumanmishramidsemtask/environments/dev'
 
     - task: CmdLine@2
       displayName: 'Output Deployment Details'
@@ -102,4 +102,4 @@ stages:
         script: |
           terraform output -json > output.json
           cat output.json
-        workingDirectory: 'environments/dev'
+        workingDirectory: 'anshumanmishramidsemtask/environments/dev'
