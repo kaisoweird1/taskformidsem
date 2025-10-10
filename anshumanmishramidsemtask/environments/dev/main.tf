@@ -4,7 +4,7 @@ provider "azurerm" {
       prevent_deletion_if_contains_resources = false
     }
   }
-  subscription_id = "cd7ce892-0134-491f-81b8-d29b153b08b3"
+  subscription_id = "6a5f3755-4cbf-4357-940c-764f5491ec99"
 }
 
 module "networking" {
@@ -41,4 +41,5 @@ module "loadbalancer" {
   rg_name          = module.networking.resource_group_name
   gateway_subnet_id = module.networking.public_subnet_id
   backend_vm_ips   = module.compute.private_ips
+
 }
