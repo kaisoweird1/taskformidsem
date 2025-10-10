@@ -6,7 +6,7 @@ variables:
     value: $(TF_VAR_admin_password)
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Anshuman_agent'
 
 stages:
 - stage: PrepareAndPlan
@@ -24,7 +24,7 @@ stages:
     - task: AzureCLI@2
       displayName: 'Azure Login (Implicit)'
       inputs:
-        azureSubscription: 'meowmeow'
+        azureSubscription: 'Anshuman_final'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
@@ -78,7 +78,7 @@ stages:
     - task: AzureCLI@2
       displayName: 'Azure Re-Login'
       inputs:
-        azureSubscription: 'meowmeow'
+        azureSubscription: 'Anshuman_final'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
