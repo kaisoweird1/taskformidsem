@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'mcr.microsoft.com/azure-cli' }
+    }
 
     environment {
         AZURE_CREDENTIALS = credentials('AZURE_CREDENTIALS')
@@ -14,12 +16,24 @@ pipeline {
                     def creds = readJSON text: AZURE_CREDENTIALS
                     sh """
                     az login --service-principal \
-                        -u ${creds.client_id} \
-                        -p ${creds.client_secret} \
-                        --tenant ${creds.tenant_id}
-                    az account set --subscription ${creds.subscription_id}
+                        -u ${creds.clientId} \
+                        -p ${creds.clientSecret} \
+                        --tenant ${creds.tenantId}
+                    az account set --subscription ${creds.subscriptionId}
                     """
                 }
+            }
+        }
+
+        stage('Install Terraform') {
+            steps {
+                sh '''
+                apk add --no-cache wget unzip
+                wget https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
+                unzip terraform_1.5.7_linux_amd64.zip
+                mv terraform /usr/local/bin/
+                terraform --version
+                '''
             }
         }
 
