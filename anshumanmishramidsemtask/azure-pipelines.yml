@@ -19,7 +19,7 @@ stages:
     - task: TerraformInstaller@1
       displayName: 'Install Terraform'
       inputs:
-        terraformVersion: 'latest'
+        terraformVersion: '1.8.5'
 
     - task: AzureCLI@2
       displayName: 'Azure Login (Implicit)'
@@ -29,7 +29,6 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           echo "Azure credentials sourced successfully."
-          # az account set --subscription $(AzureSubscriptionId)
 
     - task: CmdLine@2
       displayName: 'Terraform Init'
@@ -51,6 +50,13 @@ stages:
         script: |
           terraform plan -var="vm_admin_password=$(adminPassword)" -out=tfplan
         workingDirectory: 'anshumanmishramidsemtask/environments/dev'
+
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Terraform Plan'
+      inputs:
+        targetPath: 'anshumanmishramidsemtask/environments/dev/tfplan'
+        artifact: 'tfplan'
+        publishLocation: 'pipeline'
 
 - stage: DeploymentApproval
   displayName: 'Manual Review'
@@ -75,6 +81,13 @@ stages:
     displayName: 'Terraform Apply'
     steps:
     
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download Terraform Plan'
+      inputs:
+        buildType: 'current'
+        artifactName: 'tfplan'
+        targetPath: '$(Pipeline.Workspace)/tfplan'
+        
     - task: AzureCLI@2
       displayName: 'Azure Re-Login'
       inputs:
@@ -87,13 +100,13 @@ stages:
     - task: TerraformInstaller@1
       displayName: 'Ensure Terraform is Installed'
       inputs:
-        terraformVersion: 'latest'
+        terraformVersion: '1.8.5'
 
     - task: CmdLine@2
       displayName: 'Terraform Apply'
       inputs:
         script: |
-          terraform apply -auto-approve tfplan
+          terraform apply -auto-approve $(Pipeline.Workspace)/tfplan/tfplan
         workingDirectory: 'anshumanmishramidsemtask/environments/dev'
 
     - task: CmdLine@2
