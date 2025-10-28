@@ -23,10 +23,11 @@ server {
 EOF
 
 sudo tee /usr/share/nginx/html/index.html > /dev/null <<EOF
-<h1>Veer Meow</h1>
+<h1>Kaipai</h1>
 EOF
 
 sudo docker run --name my-nginx -p 80:80 -d \
     -v /etc/nginx/conf.d:/etc/nginx/conf.d:ro \
     -v /usr/share/nginx/html:/usr/share/nginx/html:ro \
     nginx:latest
+
