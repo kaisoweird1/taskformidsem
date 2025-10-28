@@ -1,5 +1,5 @@
 variable "env_prefix" {
-  description = "The prefix for the environment name (e.g., dev, prod)."
+  description = "The prefix for the environment name "
   type        = string
 }
 
@@ -21,4 +21,5 @@ variable "gateway_subnet_id" {
 variable "backend_vm_ips" {
   description = "A list of private IP addresses for the backend virtual machines."
   type        = list(string)
+
 }
