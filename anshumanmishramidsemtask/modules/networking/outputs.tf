@@ -1,24 +1,44 @@
-output "resource_group_name" {
-  description = "The name of the resource group created."
-  value       = azurerm_resource_group.rg.name
+variable "env_tag" {
+  description = "The tag for the environment (e.g., dev, staging, prod)."
+  type        = string
 }
 
-output "public_subnet_id" {
-  description = "The ID of the public subnet (for App Gateway)."
-  value       = azurerm_subnet.public.id
+variable "region" {
+  description = "The Azure region to create resources in."
+  type        = string
 }
 
-output "private_subnet_id" {
-  description = "The ID of the private subnet (for VMs)."
-  value       = azurerm_subnet.private.id
+variable "rg_name_override" {
+  description = "The specific name for the resource group."
+  type        = string
 }
 
-output "nsg_id" {
-  description = "The ID of the Network Security Group."
-  value       = azurerm_network_security_group.nsg.id
+variable "vnet_cidr_block" {
+  description = "The address space for the virtual network."
+  type        = list(string)
 }
 
-output "location" {
-  description = "The Azure region where resources are created."
-  value       = azurerm_resource_group.rg.location
+variable "public_subnet_cidrs" {
+  description = "The address prefix for the public subnet."
+  type        = list(string)
+}
+
+variable "private_subnet_cidrs" {
+  description = "The address prefix for the private subnet."
+  type        = list(string)
+}
+
+variable "security_rules" {
+  description = "A list of security rules to apply to the NSG."
+  type = list(object({
+    name                       = string
+    priority                   = number
+    direction                  = string
+    access                     = string
+    protocol                   = string
+    source_port_range          = string
+    destination_port_range     = string
+    source_address_prefix      = string
+    destination_address_prefix = string
+  }))
 }
