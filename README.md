@@ -10,7 +10,8 @@ The networking module creates the virtual network (VNet), subnets, route tables,
 Compute Module: Provides the application's virtual machines by connecting them to the relevant subnets and security groups specified in the networking layer.
 
 
-<img width="302" height="871" alt="image" src="https://github.com/user-attachments/assets/ae2abdfb-1e9a-4662-87fd-60bb63ba5639" />
+<img width="225" height="959" alt="image" src="https://github.com/user-attachments/assets/b389e11c-3bac-4d86-ba03-f40594bac2a6" />
+
 
 Load Balancer Module: Deploys and configures a load balancer to distribute incoming traffic efficiently across the compute instances, defining listener rules and health checks.
 
@@ -43,6 +44,7 @@ This setup requires, a self-hosted agent pool, an Azure service connection, and 
 
  Guaranteed Execution: Terraform is applied using the saved plan file in the final stage when the APPLY_CHANGES parameter is true, guaranteeing a predictable deployment.  The workspace is automatically cleaned by a post-build action.
  <img width="1108" height="493" alt="image" src="https://github.com/user-attachments/assets/69af263a-27d9-43d1-8d6e-6e30b47abc06" />
+
 
 
 
